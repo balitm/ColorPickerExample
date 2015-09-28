@@ -32,13 +32,12 @@ import UIKit
 
 class ViewController: UIViewController, UIPopoverPresentationControllerDelegate {
 
-	
 	@IBOutlet var button: UIButton!
 	
 	// Generate popover on button press
 	@IBAction func colorPickerButton(sender: UIButton) {
 	
-		let popoverVC = storyboard?.instantiateViewControllerWithIdentifier("colorPickerPopover") as ColorPickerViewController
+		let popoverVC = storyboard?.instantiateViewControllerWithIdentifier("colorPickerPopover") as! ColorPickerViewController
 		popoverVC.modalPresentationStyle = .Popover
 		popoverVC.preferredContentSize = CGSizeMake(284, 446)
 		if let popoverController = popoverVC.popoverPresentationController {
@@ -51,8 +50,8 @@ class ViewController: UIViewController, UIPopoverPresentationControllerDelegate 
 		presentViewController(popoverVC, animated: true, completion: nil)
 	}
 	
-	// Override the iPhone behavior that presents a popover as fullscreen
-	func adaptivePresentationStyleForPresentationController(controller: UIPresentationController!) -> UIModalPresentationStyle {
+	// Implement the iPhone behavior that presents a popover as fullscreen
+	func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
 		// Return no adaptive presentation style, use default presentation behaviour
 		return .None
 	}

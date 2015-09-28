@@ -67,7 +67,10 @@
 				4F9CA9F81A2A211D00D5E861 /* ColorPickerExampleTests */,
 				4F9CA9E11A2A211D00D5E861 /* Products */,
 			);
+			indentWidth = 4;
 			sourceTree = "<group>";
+			tabWidth = 4;
+			usesTabs = 1;
 		};
 		4F9CA9E11A2A211D00D5E861 /* Products */ = {
 			isa = PBXGroup;
@@ -162,6 +165,7 @@
 		4F9CA9D81A2A211D00D5E861 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = "Ethan Strider";
 				TargetAttributes = {
@@ -417,6 +421,7 @@
 				4F9CAA011A2A211D00D5E861 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4F9CAA021A2A211D00D5E861 /* Build configuration list for PBXNativeTarget "ColorPickerExampleTests" */ = {
 			isa = XCConfigurationList;
@@ -425,6 +430,7 @@
 				4F9CAA041A2A211D00D5E861 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

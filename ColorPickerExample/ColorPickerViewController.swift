@@ -38,14 +38,14 @@ class ColorPickerViewController: UIViewController, UICollectionViewDelegate, UIC
 	var delegate: ViewController? = nil
 	
 	// This function converts from HTML colors (hex strings of the form '#ffffff') to UIColors
-	func hexStringToUIColor (hex:String) -> UIColor {
-		var cString:String = hex.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet() as NSCharacterSet).uppercaseString
+	func hexStringToUIColor(hex: String) -> UIColor {
+		var cString: String = hex.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet() as NSCharacterSet).uppercaseString
 		
 		if (cString.hasPrefix("#")) {
-			cString = cString.substringFromIndex(advance(cString.startIndex, 1))
+			cString = cString.substringFromIndex(cString.startIndex.advancedBy(1))
 		}
 		
-		if (countElements(cString) != 6) {
+		if (cString.characters.count != 6) {
 			return UIColor.grayColor()
 		}
 		
@@ -65,16 +65,17 @@ class ColorPickerViewController: UIViewController, UICollectionViewDelegate, UIC
 	internal func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		return 10
 	}
+
 	// UICollectionViewDataSource Protocol:
 	// Returns the number of columns in collection view
-	internal func numberOfSectionsInCollectionView(collectionView: UICollectionView!) -> Int {
+	internal func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
 		return 16
 	}
-	// UICollectionViewDataSource Protocol:
+
+    // UICollectionViewDataSource Protocol:
 	// Inilitializes the collection view cells
 	internal func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-		
-		var cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as UICollectionViewCell
+		let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as UICollectionViewCell
 		cell.backgroundColor = UIColor.clearColor()
 		cell.tag = tag++
 		
@@ -82,19 +83,18 @@ class ColorPickerViewController: UIViewController, UICollectionViewDelegate, UIC
 	}
 	
 	// Recognizes and handles when a collection view cell has been selected
-	internal func collectionView(collectionView: UICollectionView!, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-		
-		var colorPalette: Array<String>
-		
+	internal func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+		var colorPalette: [String]
+
 		// Get colorPalette array from plist file
 		let path = NSBundle.mainBundle().pathForResource("colorPalette", ofType: "plist")
 		let pListArray = NSArray(contentsOfFile: path!)
-		
+
 		if let colorPalettePlistFile = pListArray {
-			colorPalette = colorPalettePlistFile as [String]
+			colorPalette = colorPalettePlistFile as! [String]
 			
-			var cell: UICollectionViewCell  = collectionView.cellForItemAtIndexPath(indexPath)! as UICollectionViewCell
-			var hexString = colorPalette[cell.tag]
+			let cell: UICollectionViewCell  = collectionView.cellForItemAtIndexPath(indexPath)! as UICollectionViewCell
+			let hexString = colorPalette[cell.tag]
 			color = hexStringToUIColor(hexString)
 			self.view.backgroundColor = color
 			delegate?.setButtonColor(color)
