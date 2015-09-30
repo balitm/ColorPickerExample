@@ -30,7 +30,7 @@ THE SOFTWARE.
 
 import UIKit
 
-class ColorPickerViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class ColorPickerViewController: UIViewController {
 	
 	// Global variables
 	var tag: Int = 0
@@ -59,30 +59,31 @@ class ColorPickerViewController: UIViewController, UICollectionViewDelegate, UIC
 			alpha: CGFloat(1.0)
 		)
 	}
-	
-	// UICollectionViewDataSource Protocol:
-	// Returns the number of rows in collection view
+}
+
+extension ColorPickerViewController: UICollectionViewDataSource {
+	// Returns the number of rows in a section of the collection view.
 	internal func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		return 10
 	}
 
-	// UICollectionViewDataSource Protocol:
-	// Returns the number of columns in collection view
+	// Returns the number of sections (columns) in the collection view.
 	internal func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
 		return 16
 	}
 
-    // UICollectionViewDataSource Protocol:
 	// Inilitializes the collection view cells
 	internal func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
 		let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as UICollectionViewCell
 		cell.backgroundColor = UIColor.clearColor()
 		cell.tag = tag++
-		
+
 		return cell
 	}
-	
-	// Recognizes and handles when a collection view cell has been selected
+}
+
+extension ColorPickerViewController: UICollectionViewDelegateFlowLayout {
+	// Handles when a collection view cell has been selected.
 	internal func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
 		var colorPalette: [String]
 
@@ -92,7 +93,7 @@ class ColorPickerViewController: UIViewController, UICollectionViewDelegate, UIC
 
 		if let colorPalettePlistFile = pListArray {
 			colorPalette = colorPalettePlistFile as! [String]
-			
+
 			let cell: UICollectionViewCell  = collectionView.cellForItemAtIndexPath(indexPath)! as UICollectionViewCell
 			let hexString = colorPalette[cell.tag]
 			color = hexStringToUIColor(hexString)
