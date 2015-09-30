@@ -49,7 +49,6 @@ class ColorPickerViewController: UIViewController {
 		return colors
 	}()
 	
-	var color: UIColor = UIColor.grayColor()
 	var delegate: ViewController? = nil
 
 
@@ -102,7 +101,7 @@ extension ColorPickerViewController: UICollectionViewDelegateFlowLayout {
 	// Handles when a collection view cell has been selected.
 	internal func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
 		let cell = collectionView.cellForItemAtIndexPath(indexPath)! as UICollectionViewCell
-		color = ColorPickerViewController._colorPalette[cell.tag]
+		let color = ColorPickerViewController._colorPalette[cell.tag]
 		self.view.backgroundColor = color
 		delegate?.setButtonColor(color)
 	}
