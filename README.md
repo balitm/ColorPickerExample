@@ -3,13 +3,20 @@ Color Picker Popover Example
 
 A simple color picker popover
 
+This fork fixes the following issues:
+- Modifications for Swift 2.0, Xcode 7.1
+- Use .gitignore
+- Improve handling of the color palette.
+- Use delegate protocol/pattern.
+
+
 Screenshot:
 
 ![alt text](https://raw.githubusercontent.com/EthanStrider/iOS-Projects/master/ColorPickerExample/colorPicker.png "Image Picker Screenshot")
 
 The MIT License (MIT)
 
-Copyright (c) 2014 Ethan Strider
+Copyright (c) 2014 Ethan Strider, 2015 Balazs Kilvady
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
