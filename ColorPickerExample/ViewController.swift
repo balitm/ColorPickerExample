@@ -32,44 +32,42 @@ import UIKit
 
 class ViewController: UIViewController, UIPopoverPresentationControllerDelegate {
 
-	@IBOutlet var button: UIButton!
-	
-	// Generate popover on button press
-	@IBAction func colorPickerButton(sender: UIButton) {
-	
-		let popoverVC = storyboard?.instantiateViewControllerWithIdentifier("colorPickerPopover") as! ColorPickerViewController
-		popoverVC.modalPresentationStyle = .Popover
-		popoverVC.preferredContentSize = CGSizeMake(284, 446)
-		if let popoverController = popoverVC.popoverPresentationController {
-			popoverController.sourceView = sender
-			popoverController.sourceRect = CGRect(x: 0, y: 0, width: 85, height: 30)
-			popoverController.permittedArrowDirections = .Any
-			popoverController.delegate = self
-			popoverVC.delegate = self
-		}
-		presentViewController(popoverVC, animated: true, completion: nil)
-	}
-	
-	// Implement the iPhone behavior that presents a popover as fullscreen
-	func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
-		// Return no adaptive presentation style, use default presentation behaviour
-		return .None
-	}
-	
-	override func viewDidLoad() {
-		super.viewDidLoad()
-		// Do any additional setup after loading the view, typically from a nib.
-	}
+    @IBOutlet var button: UIButton!
 
-	override func didReceiveMemoryWarning() {
-		super.didReceiveMemoryWarning()
-		// Dispose of any resources that can be recreated.
-	}
-	
-	func setButtonColor (color: UIColor) {
-		button.setTitleColor(color, forState:UIControlState.Normal)
-	}
+    // Generate popover on button press
+    @IBAction func colorPickerButton(sender: UIButton) {
 
+        let popoverVC = storyboard?.instantiateViewControllerWithIdentifier("colorPickerPopover") as! ColorPickerViewController
+        popoverVC.modalPresentationStyle = .Popover
+        popoverVC.preferredContentSize = CGSizeMake(284, 446)
+        if let popoverController = popoverVC.popoverPresentationController {
+            popoverController.sourceView = sender
+            popoverController.sourceRect = CGRect(x: 0, y: 0, width: 85, height: 30)
+            popoverController.permittedArrowDirections = .Any
+            popoverController.delegate = self
+            popoverVC.delegate = self
+        }
+        presentViewController(popoverVC, animated: true, completion: nil)
+    }
 
+    // Implement the iPhone behavior that presents a popover as fullscreen
+    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
+        // Return no adaptive presentation style, use default presentation behaviour
+        return .None
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view, typically from a nib.
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+
+    func setButtonColor (color: UIColor) {
+        button.setTitleColor(color, forState:UIControlState.Normal)
+    }
 }
 

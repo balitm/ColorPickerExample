@@ -32,77 +32,77 @@ import UIKit
 
 class ColorPickerViewController: UIViewController {
 
-	private static var kRows = 10
-	private static var kColumns = 16
-	private static let _colorPalette: [UIColor] = {
-		// Get colorPalette array from plist file
-		let path = NSBundle.mainBundle().pathForResource("colorPalette", ofType: "plist")
-		guard let pListArray = NSArray(contentsOfFile: path!) else {
-			return [UIColor]()
-		}
+    private static var kRows = 10
+    private static var kColumns = 16
+    private static let _colorPalette: [UIColor] = {
+        // Get colorPalette array from plist file
+        let path = NSBundle.mainBundle().pathForResource("colorPalette", ofType: "plist")
+        guard let pListArray = NSArray(contentsOfFile: path!) else {
+            return [UIColor]()
+        }
 
-		var colors = [UIColor]()
-		for hexString in pListArray {
-			let color = ColorPickerViewController.hexStringToUIColor(hexString as! String)
-			colors.append(color)
-		}
-		return colors
-	}()
-	
-	var delegate: ViewController? = nil
+        var colors = [UIColor]()
+        for hexString in pListArray {
+            let color = ColorPickerViewController.hexStringToUIColor(hexString as! String)
+            colors.append(color)
+        }
+        return colors
+    }()
+
+    var delegate: ViewController? = nil
 
 
-	// This function converts from HTML colors (hex strings of the form '#ffffff') to UIColors.
-	private static func hexStringToUIColor(hex: String) -> UIColor {
-		var cString: String = hex.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet() as NSCharacterSet).uppercaseString
+    // This function converts from HTML colors (hex strings of the form '#ffffff') to UIColors.
+    private static func hexStringToUIColor(hex: String) -> UIColor {
+        var cString: String = hex.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet() as NSCharacterSet).uppercaseString
 
-		if (cString.hasPrefix("#")) {
-			cString = cString.substringFromIndex(cString.startIndex.advancedBy(1))
-		}
+        if (cString.hasPrefix("#")) {
+            cString = cString.substringFromIndex(cString.startIndex.advancedBy(1))
+        }
 
-		if (cString.characters.count != 6) {
-			return UIColor.grayColor()
-		}
+        if (cString.characters.count != 6) {
+            return UIColor.grayColor()
+        }
 
-		var rgbValue:UInt32 = 0
-		NSScanner(string: cString).scanHexInt(&rgbValue)
+        var rgbValue:UInt32 = 0
+        NSScanner(string: cString).scanHexInt(&rgbValue)
 
-		return UIColor(
-			red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
-			green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
-			blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
-			alpha: CGFloat(1.0)
-		)
-	}
+        return UIColor(
+            red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
+            green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
+            blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
+            alpha: CGFloat(1.0)
+        )
+    }
 }
 
 extension ColorPickerViewController: UICollectionViewDataSource {
-	// Returns the number of rows in a section of the collection view.
-	internal func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		return ColorPickerViewController.kRows
-	}
+    // Returns the number of rows in a section of the collection view.
+    internal func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return ColorPickerViewController.kRows
+    }
 
-	// Returns the number of sections (columns) in the collection view.
-	internal func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-		return ColorPickerViewController.kColumns
-	}
+    // Returns the number of sections (columns) in the collection view.
+    internal func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        return ColorPickerViewController.kColumns
+    }
 
-	// Inilitializes the collection view cells
-	internal func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-		let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as UICollectionViewCell
-		cell.backgroundColor = UIColor.clearColor()
-		cell.tag = indexPath.section * ColorPickerViewController.kRows + indexPath.item
+    // Inilitializes the collection view cells
+    internal func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as UICollectionViewCell
+        cell.backgroundColor = UIColor.clearColor()
+        cell.tag = indexPath.section * ColorPickerViewController.kRows + indexPath.item
 
-		return cell
-	}
+        return cell
+    }
 }
 
 extension ColorPickerViewController: UICollectionViewDelegateFlowLayout {
-	// Handles when a collection view cell has been selected.
-	internal func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-		let cell = collectionView.cellForItemAtIndexPath(indexPath)! as UICollectionViewCell
-		let color = ColorPickerViewController._colorPalette[cell.tag]
-		self.view.backgroundColor = color
-		delegate?.setButtonColor(color)
-	}
+    // Handles when a collection view cell has been selected.
+    internal func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        let cell = collectionView.cellForItemAtIndexPath(indexPath)! as UICollectionViewCell
+        let color = ColorPickerViewController._colorPalette[cell.tag]
+        self.view.backgroundColor = color
+        delegate?.setButtonColor(color)
+    }
 }
