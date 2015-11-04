@@ -30,6 +30,10 @@ THE SOFTWARE.
 
 import UIKit
 
+protocol ColorPickerViewDelegate: UIPopoverPresentationControllerDelegate {
+    func colorPicker(picker: ColorPickerViewController, didSelectColor color: UIColor!)
+}
+
 class ColorPickerViewController: UIViewController {
 
     private static var kRows = 10
@@ -49,11 +53,11 @@ class ColorPickerViewController: UIViewController {
         return colors
     }()
 
-    var delegate: ViewController? = nil
+    var delegate: ColorPickerViewDelegate? = nil
 
 
     // This function converts from HTML colors (hex strings of the form '#ffffff') to UIColors.
-    private static func hexStringToUIColor(hex: String) -> UIColor {
+    private class func hexStringToUIColor(hex: String) -> UIColor {
         var cString: String = hex.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet() as NSCharacterSet).uppercaseString
 
         if (cString.hasPrefix("#")) {
@@ -74,6 +78,23 @@ class ColorPickerViewController: UIViewController {
             alpha: CGFloat(1.0)
         )
     }
+
+    class func create(delegate: ColorPickerViewDelegate, sender: UIView) -> ColorPickerViewController {
+        let sb = UIStoryboard.init(name: "ColorPicker", bundle: nil)
+        let popoverVC = sb.instantiateViewControllerWithIdentifier("colorPickerPopover") as! ColorPickerViewController
+
+        popoverVC.modalPresentationStyle = .Popover
+        popoverVC.preferredContentSize = CGSizeMake(284, 446)
+        if let popoverController = popoverVC.popoverPresentationController {
+            popoverController.sourceView = sender
+            popoverController.sourceRect = CGRect(x: 0, y: 0, width: 85, height: 30)
+            popoverController.permittedArrowDirections = .Any
+            popoverController.delegate = delegate
+            popoverVC.delegate = delegate
+        }
+        return popoverVC
+    }
+
 }
 
 extension ColorPickerViewController: UICollectionViewDataSource {
@@ -103,6 +124,6 @@ extension ColorPickerViewController: UICollectionViewDelegateFlowLayout {
         let cell = collectionView.cellForItemAtIndexPath(indexPath)! as UICollectionViewCell
         let color = ColorPickerViewController._colorPalette[cell.tag]
         self.view.backgroundColor = color
-        delegate?.setButtonColor(color)
+        delegate?.colorPicker(self, didSelectColor: color)
     }
 }
