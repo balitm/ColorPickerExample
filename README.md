@@ -12,7 +12,7 @@ This fork fixes the following issues:
 
 Screenshot:
 
-![alt text](https://raw.githubusercontent.com/EthanStrider/iOS-Projects/master/ColorPickerExample/colorPicker.png "Image Picker Screenshot")
+![alt text](colorPicker.png "Image Picker Screenshot")
 
 The MIT License (MIT)
 
