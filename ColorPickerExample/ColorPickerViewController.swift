@@ -35,9 +35,8 @@ protocol ColorPickerViewDelegate: UIPopoverPresentationControllerDelegate {
 }
 
 class ColorPickerViewController: UIViewController {
-
-    private static var kRows = 10
-    private static var kColumns = 16
+    private static var kRows = 16
+    private static var kColumns = 10
     private static let _colorPalette: [UIColor] = {
         // Get colorPalette array from plist file
         let path = NSBundle.mainBundle().pathForResource("colorPalette", ofType: "plist")
@@ -54,6 +53,7 @@ class ColorPickerViewController: UIViewController {
     }()
 
     var delegate: ColorPickerViewDelegate? = nil
+    @IBOutlet weak var collectionView: UICollectionView!
 
 
     // This function converts from HTML colors (hex strings of the form '#ffffff') to UIColors.
@@ -84,10 +84,10 @@ class ColorPickerViewController: UIViewController {
         let popoverVC = sb.instantiateViewControllerWithIdentifier("colorPickerPopover") as! ColorPickerViewController
 
         popoverVC.modalPresentationStyle = .Popover
-        popoverVC.preferredContentSize = CGSizeMake(284, 446)
+        popoverVC.preferredContentSize = CGSizeMake(269 + 2 * 8, 431 + 2 * 8)
         if let popoverController = popoverVC.popoverPresentationController {
             popoverController.sourceView = sender
-            popoverController.sourceRect = CGRect(x: 0, y: 0, width: 85, height: 30)
+            popoverController.sourceRect = sender.bounds
             popoverController.permittedArrowDirections = .Any
             popoverController.delegate = delegate
             popoverVC.delegate = delegate
@@ -95,24 +95,28 @@ class ColorPickerViewController: UIViewController {
         return popoverVC
     }
 
+    override func viewDidLoad() {
+        collectionView.collectionViewLayout.registerClass(ColorPickerDecorationView.self, forDecorationViewOfKind: "Background")
+    }
 }
 
 extension ColorPickerViewController: UICollectionViewDataSource {
-    // Returns the number of rows in a section of the collection view.
+    // Returns the number of columns in a section of the collection view.
     internal func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return ColorPickerViewController.kRows
+        return ColorPickerViewController.kColumns
     }
 
-    // Returns the number of sections (columns) in the collection view.
+    // Returns the number of sections (rows) in the collection view.
     internal func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        return ColorPickerViewController.kColumns
+        return ColorPickerViewController.kRows
     }
 
     // Inilitializes the collection view cells
     internal func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as UICollectionViewCell
-        cell.backgroundColor = UIColor.clearColor()
-        cell.tag = indexPath.section * ColorPickerViewController.kRows + indexPath.item
+        let tag = indexPath.section * ColorPickerViewController.kColumns + indexPath.item
+        cell.backgroundColor = ColorPickerViewController._colorPalette[tag]
+        cell.tag = tag
 
         return cell
     }

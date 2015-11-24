@@ -51,15 +51,20 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController: ColorPickerViewDelegate {
-    internal func colorPicker(picker: ColorPickerViewController, didSelectColor color: UIColor!) {
-        button.setTitleColor(color, forState:UIControlState.Normal)
-    }
 
-    // For UIPopoverPresentationControllerDelegate: implement the iPhone behavior
-    // that presents a popover as fullscreen
+@available(iOS 8.0, *)
+extension ViewController: UIPopoverPresentationControllerDelegate {
+    // Override the iPhone behavior that presents a popover as fullscreen
     func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
         // Return no adaptive presentation style, use default presentation behaviour
         return .None
+    }
+}
+
+
+@available(iOS 8.0, *)
+extension ViewController: ColorPickerViewDelegate {
+    internal func colorPicker(picker: ColorPickerViewController, didSelectColor color: UIColor!) {
+        button.setTitleColor(color, forState:UIControlState.Normal)
     }
 }

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		290D5B671C04CF6C0030BA10 /* ColorPickerDecorationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290D5B661C04CF6C0030BA10 /* ColorPickerDecorationView.swift */; };
+		290D5B691C04D9840030BA10 /* FlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290D5B681C04D9840030BA10 /* FlowLayout.swift */; };
 		29CCE6651BEA1DDD0037107C /* ColorPicker.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29CCE6641BEA1DDD0037107C /* ColorPicker.storyboard */; };
 		4F9CA9E61A2A211D00D5E861 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9CA9E51A2A211D00D5E861 /* AppDelegate.swift */; };
 		4F9CA9E81A2A211D00D5E861 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9CA9E71A2A211D00D5E861 /* ViewController.swift */; };
@@ -29,6 +31,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		290D5B661C04CF6C0030BA10 /* ColorPickerDecorationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorPickerDecorationView.swift; sourceTree = "<group>"; };
+		290D5B681C04D9840030BA10 /* FlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlowLayout.swift; sourceTree = "<group>"; };
 		29CCE6641BEA1DDD0037107C /* ColorPicker.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ColorPicker.storyboard; sourceTree = "<group>"; };
 		4F9CA9E01A2A211D00D5E861 /* ColorPickerExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ColorPickerExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F9CA9E41A2A211D00D5E861 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -91,10 +95,12 @@
 				4F9CA9E71A2A211D00D5E861 /* ViewController.swift */,
 				4F9CAA051A2A228800D5E861 /* ColorPickerViewController.swift */,
 				4F9CA9E91A2A211D00D5E861 /* Main.storyboard */,
+				29CCE6641BEA1DDD0037107C /* ColorPicker.storyboard */,
 				4F9CA9EC1A2A211D00D5E861 /* Images.xcassets */,
 				4F9CA9EE1A2A211D00D5E861 /* LaunchScreen.xib */,
 				4F9CA9E31A2A211D00D5E861 /* Supporting Files */,
-				29CCE6641BEA1DDD0037107C /* ColorPicker.storyboard */,
+				290D5B661C04CF6C0030BA10 /* ColorPickerDecorationView.swift */,
+				290D5B681C04D9840030BA10 /* FlowLayout.swift */,
 			);
 			path = ColorPickerExample;
 			sourceTree = "<group>";
@@ -229,6 +235,8 @@
 			files = (
 				4F9CA9E81A2A211D00D5E861 /* ViewController.swift in Sources */,
 				4F9CA9E61A2A211D00D5E861 /* AppDelegate.swift in Sources */,
+				290D5B691C04D9840030BA10 /* FlowLayout.swift in Sources */,
+				290D5B671C04CF6C0030BA10 /* ColorPickerDecorationView.swift in Sources */,
 				4F9CAA061A2A228800D5E861 /* ColorPickerViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
