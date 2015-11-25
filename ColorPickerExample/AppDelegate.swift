@@ -1,6 +1,6 @@
 /*
 
-ColorPickerViewController.swift
+AppDelegate.swift
 
 Created by Ethan Strider on 11/28/14.
 

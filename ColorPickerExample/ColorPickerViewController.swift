@@ -34,9 +34,11 @@ protocol ColorPickerViewDelegate: UIPopoverPresentationControllerDelegate {
     func colorPicker(picker: ColorPickerViewController, didSelectColor color: UIColor!)
 }
 
-class ColorPickerViewController: UIViewController {
-    private static var kRows = 16
-    private static var kColumns = 10
+class ColorPickerViewController: UICollectionViewController {
+    private static let kItemSideLength = CGFloat(26.0)
+    private static let kItemMargin = CGFloat(8.0)
+    private static let kRows = 16
+    private static let kColumns = 10
     private static let _colorPalette: [UIColor] = {
         // Get colorPalette array from plist file
         let path = NSBundle.mainBundle().pathForResource("colorPalette", ofType: "plist")
@@ -53,7 +55,6 @@ class ColorPickerViewController: UIViewController {
     }()
 
     var delegate: ColorPickerViewDelegate? = nil
-    @IBOutlet weak var collectionView: UICollectionView!
 
 
     // This function converts from HTML colors (hex strings of the form '#ffffff') to UIColors.
@@ -68,7 +69,7 @@ class ColorPickerViewController: UIViewController {
             return UIColor.grayColor()
         }
 
-        var rgbValue:UInt32 = 0
+        var rgbValue: UInt32 = 0
         NSScanner(string: cString).scanHexInt(&rgbValue)
 
         return UIColor(
@@ -81,10 +82,15 @@ class ColorPickerViewController: UIViewController {
 
     class func create(delegate: ColorPickerViewDelegate, sender: UIView) -> ColorPickerViewController {
         let sb = UIStoryboard.init(name: "ColorPicker", bundle: nil)
-        let popoverVC = sb.instantiateViewControllerWithIdentifier("colorPickerPopover") as! ColorPickerViewController
+        let popoverVC = sb.instantiateViewControllerWithIdentifier("colorPicker") as! ColorPickerViewController
 
         popoverVC.modalPresentationStyle = .Popover
-        popoverVC.preferredContentSize = CGSizeMake(269 + 2 * 8, 431 + 2 * 8)
+
+        let m = ColorPickerViewController.kItemMargin
+        let l = ColorPickerViewController.kItemSideLength
+        popoverVC.preferredContentSize = CGSize(
+            width: (l + 1.0) * 10.0 + 2.0 * m,
+            height: (l + 1.0) * 16 + 2.0 * m)
         if let popoverController = popoverVC.popoverPresentationController {
             popoverController.sourceView = sender
             popoverController.sourceRect = sender.bounds
@@ -96,23 +102,31 @@ class ColorPickerViewController: UIViewController {
     }
 
     override func viewDidLoad() {
-        collectionView.collectionViewLayout.registerClass(ColorPickerDecorationView.self, forDecorationViewOfKind: "Background")
+        collectionView!.collectionViewLayout.registerClass(ColorPickerDecorationView.self, forDecorationViewOfKind: ColorPickerDecorationView.kind)
+        let m = ColorPickerViewController.kItemMargin
+        collectionView!.contentInset = UIEdgeInsets(top: m, left: m, bottom: m, right: m)
+        guard let layout = collectionViewLayout as? FlowLayout else {
+            return
+        }
+        layout.itemSize = CGSize(width: ColorPickerViewController.kItemSideLength,
+            height: ColorPickerViewController.kItemSideLength)
     }
-}
 
-extension ColorPickerViewController: UICollectionViewDataSource {
+
+    // MARK: UICollectionViewDataSource
+
     // Returns the number of columns in a section of the collection view.
-    internal func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return ColorPickerViewController.kColumns
     }
 
     // Returns the number of sections (rows) in the collection view.
-    internal func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return ColorPickerViewController.kRows
     }
 
     // Inilitializes the collection view cells
-    internal func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as UICollectionViewCell
         let tag = indexPath.section * ColorPickerViewController.kColumns + indexPath.item
         cell.backgroundColor = ColorPickerViewController._colorPalette[tag]
@@ -120,14 +134,15 @@ extension ColorPickerViewController: UICollectionViewDataSource {
 
         return cell
     }
-}
 
-extension ColorPickerViewController: UICollectionViewDelegateFlowLayout {
+
+    // MARK: UICollectionViewDelegateFlowLayout
+
     // Handles when a collection view cell has been selected.
-    internal func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let cell = collectionView.cellForItemAtIndexPath(indexPath)! as UICollectionViewCell
         let color = ColorPickerViewController._colorPalette[cell.tag]
-        self.view.backgroundColor = color
+        collectionView.backgroundColor = color
         delegate?.colorPicker(self, didSelectColor: color)
     }
 }

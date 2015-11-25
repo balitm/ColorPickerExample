@@ -6,60 +6,38 @@
     </dependencies>
     <scenes>
         <!--Color Picker View Controller-->
-        <scene sceneID="RPI-VO-D8K">
+        <scene sceneID="3Ct-0V-q4a">
             <objects>
-                <viewController storyboardIdentifier="colorPickerPopover" id="Fu5-ih-Sza" customClass="ColorPickerViewController" customModule="ColorPickerExample" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="mN6-ep-O94"/>
-                        <viewControllerLayoutGuide type="bottom" id="tvi-EH-QRw"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="beQ-58-syK">
+                <collectionViewController storyboardIdentifier="colorPicker" id="Rxc-Yl-yVd" customClass="ColorPickerViewController" customModule="ColorPickerExample" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="irc-Te-VOR">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" scrollEnabled="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="6ox-1X-wXn">
-                                <rect key="frame" x="8" y="6" width="269" height="431"/>
-                                <animations/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="269" id="C70-dg-kgU"/>
-                                    <constraint firstAttribute="height" constant="431" id="MgW-b2-xOo"/>
-                                </constraints>
-                                <collectionViewLayout key="collectionViewLayout" id="cYg-xD-UUw" customClass="FlowLayout" customModule="ColorPickerExample"/>
-                                <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="0aV-1O-myd">
-                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <animations/>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
-                                        <animations/>
-                                        <color key="backgroundColor" red="1" green="0.0" blue="0.010051519910000001" alpha="1" colorSpace="calibratedRGB"/>
-                                    </collectionViewCell>
-                                </cells>
-                                <connections>
-                                    <outlet property="dataSource" destination="Fu5-ih-Sza" id="Mbo-gW-tz3"/>
-                                    <outlet property="delegate" destination="Fu5-ih-Sza" id="YeR-eU-Zqj"/>
-                                </connections>
-                            </collectionView>
-                        </subviews>
                         <animations/>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="6ox-1X-wXn" firstAttribute="leading" secondItem="beQ-58-syK" secondAttribute="leading" constant="8" id="Ahr-UH-dYk"/>
-                            <constraint firstItem="6ox-1X-wXn" firstAttribute="top" secondItem="beQ-58-syK" secondAttribute="top" constant="8" id="ES1-Ud-yba"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="collectionView" destination="6ox-1X-wXn" id="9wL-lR-3kc"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="FSF-kB-M8r" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                        <collectionViewLayout key="collectionViewLayout" id="ciB-oC-fLY" customClass="FlowLayout" customModule="ColorPickerExample" customModuleProvider="target"/>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="ZNb-cg-N62">
+                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <animations/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                                <animations/>
+                                <color key="backgroundColor" red="1" green="0.0" blue="0.010051519910000001" alpha="1" colorSpace="calibratedRGB"/>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="Rxc-Yl-yVd" id="byC-nt-7E9"/>
+                            <outlet property="delegate" destination="Rxc-Yl-yVd" id="cUp-9O-RSH"/>
+                        </connections>
+                    </collectionView>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="M7a-JC-vqf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="348" y="357"/>
+            <point key="canvasLocation" x="75" y="-319"/>
         </scene>
     </scenes>
 </document>

@@ -13,7 +13,6 @@ class FlowLayout: UICollectionViewFlowLayout {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.scrollDirection = UICollectionViewScrollDirection.Vertical;
-        self.itemSize = CGSize(width: 26.0, height: 26.0)
         self.minimumInteritemSpacing = 1;
         self.minimumLineSpacing = 1;
         self.sectionInset = UIEdgeInsetsMake(0.0, 0.0, 1.0, 0.0);
@@ -32,7 +31,7 @@ class FlowLayout: UICollectionViewFlowLayout {
             return nil
         }
         var ip = NSIndexPath(forItem: 0, inSection: 0)
-        guard let attribute  = layoutAttributesForDecorationViewOfKind("Background", atIndexPath: ip) else {
+        guard let attribute  = layoutAttributesForDecorationViewOfKind(ColorPickerDecorationView.kind, atIndexPath: ip) else {
             return nil
         }
         var allAttributes = [attribute]

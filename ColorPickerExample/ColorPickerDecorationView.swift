@@ -10,6 +10,8 @@ import UIKit
 
 class ColorPickerDecorationView: UICollectionReusableView {
 
+    static let kind = "Background"
+
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
