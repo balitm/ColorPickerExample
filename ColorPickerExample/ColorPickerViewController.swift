@@ -53,6 +53,18 @@ class ColorPickerViewController: UICollectionViewController {
         }
         return colors
     }()
+    private var _orientation = UIInterfaceOrientation.Portrait
+
+    enum Errors: ErrorType {
+        case kInvalidOrientation
+        case kInvalidLayout
+    }
+
+    private struct _SetupFlags: OptionSetType {
+        let rawValue: OptionBits
+        static let kSize = _SetupFlags(rawValue: 1 << 0)
+        static let kScrollDirection = _SetupFlags(rawValue: 1 << 1)
+    }
 
     var delegate: ColorPickerViewDelegate? = nil
 
@@ -80,17 +92,48 @@ class ColorPickerViewController: UICollectionViewController {
         )
     }
 
-    class func create(delegate: ColorPickerViewDelegate, sender: UIView) -> ColorPickerViewController {
+    private func _setupLayout(flags: _SetupFlags) throws {
+        var layout: FlowLayout! = nil
+        if flags.contains(.kScrollDirection) {
+            layout = collectionViewLayout as? FlowLayout
+            if layout == nil {
+                throw Errors.kInvalidLayout
+            }
+        }
+        let m = ColorPickerViewController.kItemMargin
+        let l = ColorPickerViewController.kItemSideLength
+        switch _orientation {
+        case .Portrait, .PortraitUpsideDown:
+            if flags.contains(.kSize) {
+                preferredContentSize = CGSize(
+                    width: (l + 1.0) * 10.0 - 1.0 + 2.0 * m,
+                    height: (l + 1.0) * 16.0 - 1.0 + 2.0 * m)
+            }
+            if flags.contains(.kScrollDirection) {
+                layout.scrollDirection = UICollectionViewScrollDirection.Vertical;
+            }
+        case .LandscapeLeft, .LandscapeRight:
+            if flags.contains(.kSize) {
+                preferredContentSize = CGSize(
+                    width: (l + 1.0) * 16.0 - 1.0 + 2.0 * m,
+                    height: (l + 1.0) * 10.0 - 1.0  + 2.0 * m)
+            }
+            if flags.contains(.kScrollDirection) {
+                layout.scrollDirection = UICollectionViewScrollDirection.Horizontal;
+            }
+        default:
+            throw Errors.kInvalidOrientation
+        }
+
+    }
+
+    class func create(delegate: ColorPickerViewDelegate, _ sender: UIView, _ orientation: UIInterfaceOrientation) -> ColorPickerViewController {
         let sb = UIStoryboard.init(name: "ColorPicker", bundle: nil)
         let popoverVC = sb.instantiateViewControllerWithIdentifier("colorPicker") as! ColorPickerViewController
 
         popoverVC.modalPresentationStyle = .Popover
-
-        let m = ColorPickerViewController.kItemMargin
-        let l = ColorPickerViewController.kItemSideLength
-        popoverVC.preferredContentSize = CGSize(
-            width: (l + 1.0) * 10.0 + 2.0 * m,
-            height: (l + 1.0) * 16 + 2.0 * m)
+        popoverVC._orientation = orientation
+        try! popoverVC._setupLayout(.kSize)
         if let popoverController = popoverVC.popoverPresentationController {
             popoverController.sourceView = sender
             popoverController.sourceRect = sender.bounds
@@ -110,6 +153,14 @@ class ColorPickerViewController: UICollectionViewController {
         }
         layout.itemSize = CGSize(width: ColorPickerViewController.kItemSideLength,
             height: ColorPickerViewController.kItemSideLength)
+        layout.minimumInteritemSpacing = 1;
+        layout.minimumLineSpacing = 1;
+        try! _setupLayout(.kScrollDirection)
+    }
+
+    func setupLayout(orientation: UIInterfaceOrientation) throws {
+        _orientation = orientation
+        try _setupLayout([_SetupFlags.kSize, _SetupFlags.kScrollDirection])
     }
 
 
@@ -117,18 +168,18 @@ class ColorPickerViewController: UICollectionViewController {
 
     // Returns the number of columns in a section of the collection view.
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return ColorPickerViewController.kColumns
+        return ColorPickerViewController.kColumns * ColorPickerViewController.kRows
     }
 
     // Returns the number of sections (rows) in the collection view.
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        return ColorPickerViewController.kRows
+        return 1
     }
 
     // Inilitializes the collection view cells
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as UICollectionViewCell
-        let tag = indexPath.section * ColorPickerViewController.kColumns + indexPath.item
+        let tag = indexPath.item
         cell.backgroundColor = ColorPickerViewController._colorPalette[tag]
         cell.tag = tag
 

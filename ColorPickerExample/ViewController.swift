@@ -31,13 +31,14 @@ THE SOFTWARE.
 import UIKit
 
 class ViewController: UIViewController {
-
     @IBOutlet var button: UIButton!
+    var _colorPicker: ColorPickerViewController?
 
     // Generate popover on button press.
     @IBAction func colorPickerButton(sender: UIButton) {
-        let colorPicker = ColorPickerViewController.create(self, sender: sender)
-        presentViewController(colorPicker, animated: true, completion: nil)
+        let orientation = view.frame.width < view.frame.height ? UIInterfaceOrientation.Portrait : UIInterfaceOrientation.LandscapeLeft;
+        _colorPicker = ColorPickerViewController.create(self, sender, orientation)
+        presentViewController(_colorPicker!, animated: true, completion: nil)
     }
 
     override func viewDidLoad() {
@@ -48,6 +49,10 @@ class ViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+
+    override func willRotateToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
+        try! _colorPicker?.setupLayout(toInterfaceOrientation)
     }
 }
 

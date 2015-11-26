@@ -9,15 +9,6 @@
 import UIKit
 
 class FlowLayout: UICollectionViewFlowLayout {
-
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        self.scrollDirection = UICollectionViewScrollDirection.Vertical;
-        self.minimumInteritemSpacing = 1;
-        self.minimumLineSpacing = 1;
-        self.sectionInset = UIEdgeInsetsMake(0.0, 0.0, 1.0, 0.0);
-    }
-
     override func layoutAttributesForDecorationViewOfKind(elementKind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionViewLayoutAttributes? {
         let layoutAttributes = UICollectionViewLayoutAttributes(forDecorationViewOfKind: elementKind, withIndexPath: indexPath)
         let cSize = collectionViewContentSize()
