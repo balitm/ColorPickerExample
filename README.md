@@ -4,15 +4,22 @@ Color Picker Popover Example
 A simple color picker popover
 
 This fork fixes the following issues:
-- Modifications for Swift 2.0, Xcode 7.1
+- Modifications for Swift 2.1, Xcode 7.1
 - Use .gitignore
 - Improve handling of the color palette.
 - Use delegate protocol/pattern.
+- Fix encapsulation.
+- Use guards, throw.
+- Drop "magic numbers".
+- Drop background view.
+- Drop background image: use decoration view for background.
+- Make collection rotatable to handle orientation changes of the device.
 
 
 Screenshot:
 
-![alt text](colorPicker.png "Image Picker Screenshot")
+![alt text](colorPicker_vert.png "Vertical Image Picker Screenshot")
+![alt text](colorPicker_horiz.png "Horizontal Image Picker Screenshot")
 
 The MIT License (MIT)
 

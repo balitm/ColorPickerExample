@@ -14,7 +14,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <animations/>
                         <color key="backgroundColor" red="0.94509803921568625" green="0.94509803921568625" blue="0.94509803921568614" alpha="1" colorSpace="calibratedRGB"/>
-                        <collectionViewLayout key="collectionViewLayout" id="ciB-oC-fLY" customClass="FlowLayout" customModule="ColorPickerExample" customModuleProvider="target"/>
+                        <collectionViewLayout key="collectionViewLayout" id="ciB-oC-fLY" customClass="ColorPickerFlowLayout" customModule="ColorPickerExample" customModuleProvider="target"/>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="ZNb-cg-N62">
                                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>

@@ -1,12 +1,10 @@
 /*
-
 ColorPickerViewController.swift
-
 Created by Ethan Strider on 11/28/14.
 
 The MIT License (MIT)
 
-Copyright (c) 2014 Ethan Strider, 2015 Balazs Kilvady
+Copyright © 2014 Ethan Strider, 2015 Balázs Kilvády, kil-dev
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -25,15 +23,16 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
-
 */
 
 import UIKit
 
+@available(iOS 8.0, *)
 protocol ColorPickerViewDelegate: UIPopoverPresentationControllerDelegate {
     func colorPicker(picker: ColorPickerViewController, didSelectColor color: UIColor!)
 }
 
+@available(iOS 8.0, *)
 class ColorPickerViewController: UICollectionViewController {
     private static let kItemSideLength = CGFloat(26.0)
     private static let kItemMargin = CGFloat(8.0)
@@ -93,9 +92,9 @@ class ColorPickerViewController: UICollectionViewController {
     }
 
     private func _setupLayout(flags: _SetupFlags) throws {
-        var layout: FlowLayout! = nil
+        var layout: ColorPickerFlowLayout! = nil
         if flags.contains(.kScrollDirection) {
-            layout = collectionViewLayout as? FlowLayout
+            layout = collectionViewLayout as? ColorPickerFlowLayout
             if layout == nil {
                 throw Errors.kInvalidLayout
             }
@@ -148,7 +147,7 @@ class ColorPickerViewController: UICollectionViewController {
         collectionView!.collectionViewLayout.registerClass(ColorPickerDecorationView.self, forDecorationViewOfKind: ColorPickerDecorationView.kind)
         let m = ColorPickerViewController.kItemMargin
         collectionView!.contentInset = UIEdgeInsets(top: m, left: m, bottom: m, right: m)
-        guard let layout = collectionViewLayout as? FlowLayout else {
+        guard let layout = collectionViewLayout as? ColorPickerFlowLayout else {
             return
         }
         layout.itemSize = CGSize(width: ColorPickerViewController.kItemSideLength,
@@ -187,7 +186,7 @@ class ColorPickerViewController: UICollectionViewController {
     }
 
 
-    // MARK: UICollectionViewDelegateFlowLayout
+    // MARK: UICollectionViewDelegateColorPickerFlowLayout
 
     // Handles when a collection view cell has been selected.
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
